@@ -4,12 +4,13 @@ const express = require("express");
 const app = express();
 const initatedata = require("./data.js");
 const path = require("path");
+const methodOverride = require("method-override");
 
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"..","Views"));
 app.use(express.urlencoded({extended:true}));
-
+app.use(methodOverride("_method"));
 if (typeof globalThis.crypto === "undefined") {
   globalThis.crypto = require("crypto").webcrypto;
 }
@@ -50,11 +51,41 @@ app.get("/listings/:id", async (req,res) => {
     res.render("./listing/show.ejs", { listings });
 });
 
-// create route for new listing
+// New Route
 app.get("/listing/new", (req,res) => {
-    res.render("./listing/create.ejs");
+    res.render("./listing/new.ejs");
 })
 
+//Create Route
+app.post("/listings", async (req,res) => {
+    // let {title,description, image, price,country,location } = req.body;
+    let newlisting = new listing(req.body.listing);
+    await newlisting.save();
+    res.redirect("/listings");
+})
+
+//Edit Route
+app.get("/listings/:id/edit", async (req,res) => {
+    const {id} = req.params;
+    const listings = await listing.findById(id);
+    res.render("./listings/edit.ejs",);
+})
+
+//Update Route
+app.put("/listings/:id", async (req,res) => {
+    let {id} = req.params;
+    await listing.findByIdAndUpdate(id, {...req.body.listing});
+    res.redirect(`/listings/${id}`);
+
+})
+
+// Delete Route
+app.delete("/listings/:id/delete", async (req,res) =>
+{
+    let {id} = req.params;
+    await listing.findByIdAndDelete(id);
+    res.redirect("/listings");
+})
 // server listing on it 
 app.listen(8080, () => {
     console.log("server is running on port 8080");
