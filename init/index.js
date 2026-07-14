@@ -80,12 +80,14 @@ app.put("/listings/:id", async (req,res) => {
 })
 
 // Delete Route
-app.delete("/listings/:id/delete", async (req,res) =>
+app.delete("/listings/:id", async (req,res) =>
 {
     let {id} = req.params;
-    await listing.findByIdAndDelete(id);
+    let deletedlisting = await listing.findByIdAndDelete(id);
+    console.log(deletedlisting);
     res.redirect("/listings");
 })
+
 // server listing on it 
 app.listen(8080, () => {
     console.log("server is running on port 8080");
