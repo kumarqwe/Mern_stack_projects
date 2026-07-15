@@ -68,7 +68,7 @@ app.post("/listings", async (req,res) => {
 app.get("/listings/:id/edit", async (req,res) => {
     const {id} = req.params;
     const listings = await listing.findById(id);
-    res.render("./listings/edit.ejs",);
+    res.render("./listing/edit.ejs", { listing: listings });
 })
 
 //Update Route

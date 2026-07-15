@@ -11,8 +11,11 @@
         <button>create new listing</button>
     </form>
     <ul>
-        <% for(listingdata in listingdatas) { %>
-        <li><a href="/listing/<%= listingdata._id %>" <%= listingdata.title %></a></li>
+        <% for (let listingdata of listingdatas) { %>
+            <li>
+                <a href="/listings/<%= listingdata._id %>"><%= listingdata.title %></a>
+            </li>
+        <% } %>
     </ul>
 </body>
 </html>

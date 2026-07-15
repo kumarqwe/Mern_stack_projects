@@ -8,16 +8,16 @@
 <body>
      <h1>listing details</h1>
      <ul>
-        <li <%= listing.title %> </li>
-        <li <%= listing.descritpion %> </li>
-        <li &#8377 <%= listing.price.toLocalString("en-IN") %> </li>
-        <li <%= listing.location %> </li>
-        <li <%= listing.country %> </li> 
+        <li><%= listings.title %></li>
+        <li><%= listings.description %></li>
+        <li>₹ <%= listings.price.toLocaleString("en-IN") %></li>
+        <li><%= listings.location %></li>
+        <li><%= listings.country %></li>
       </ul>
       <br/>
-        <a href="/listings/<%= listing._id %>/edit">Edit this Listing</a> 
+        <a href="/listings/<%= listings._id %>/edit">Edit this Listing</a> 
         <br/><br/>
-       <form method="post" action="/listings/<%=listing._id %>_?method=DELETE">
+       <form method="post" action="/listings/<%= listings._id %>?_method=DELETE">
         <button>Delete this listing</button>
        </form>
 </body>
