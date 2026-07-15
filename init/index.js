@@ -5,12 +5,17 @@ const app = express();
 const initatedata = require("./data.js");
 const path = require("path");
 const methodOverride = require("method-override");
-
+const ejsmate = require("ejs-mate");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"..","Views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.engine("ejs",ejsmate);
+
+
 if (typeof globalThis.crypto === "undefined") {
   globalThis.crypto = require("crypto").webcrypto;
 }

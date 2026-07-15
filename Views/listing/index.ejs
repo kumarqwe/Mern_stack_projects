@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<% layout("layouts/boilerplate") %>
 <body>
-    <h1>hello these are all listings</h1>
-    <form method="post" action="/listing/new">
+    <!-- <form method="post" action="/listing/new">
         <button>create new listing</button>
-    </form>
+    </form> -->
+    <b>All listings</b>
     <ul>
         <% for (let listingdata of listingdatas) { %>
             <li>
@@ -18,4 +12,3 @@
         <% } %>
     </ul>
 </body>
-</html>
