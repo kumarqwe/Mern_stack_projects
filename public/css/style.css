@@ -1,6 +1,4 @@
-body {
-    background-color: #77a2cd !important;
-}
+
 
 /* NAV BAR  */
 .navbar {
@@ -15,5 +13,5 @@ body {
 }
 
 .nav-link {
-    color : #222222;
+    color : #222222 !important;
 }
