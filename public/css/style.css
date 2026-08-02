@@ -98,8 +98,24 @@ body {
     border: none !important;
 }
 
-
+/* edit page */
 .edit-btn {
     background-color : red !important;
     border: none !important;
+}
+
+/* show page */
+.show-img {
+    height: 30vh;
+    object-fit: cover;
+}
+
+.btns {
+    display:flex;
+}
+
+.show-card 
+{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
