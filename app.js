@@ -7,7 +7,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsmate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
-
+const ExpressError = require("./utils/ExpressError.js");
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"Views"));
 app.use(express.urlencoded({extended:true}));
@@ -65,8 +65,7 @@ app.post("/listings", wrapAsync(async (req,res, next) => {
     const newListing = new listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
-})
-);
+}));
 
 //Edit Route
 app.get("/listings/:id/edit", async (req,res, next) => {
@@ -93,9 +92,16 @@ app.delete("/listings/:id", wrapAsync(async (req,res) =>
 })
 );
 
+// for all invalid routes
+app.all(/.*/, (req,res, next) => {
+    next(new ExpressError(404, "page not found"));
+});
+
+
 // Error handling middleware
 app.use((err,req, res, next) => {
-    res.send("something went wrong");
+    let {statusCode=500,message="Something went wrong"} = err;
+    res.status(statusCode).send(message);
 });
 
 // server listing on it 
