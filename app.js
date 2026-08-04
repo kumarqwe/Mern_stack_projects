@@ -107,7 +107,8 @@ app.all(/.*/, (req,res, next) => {
 // Error handling middleware
 app.use((err,req, res, next) => {
     let {statusCode=500,message="Something went wrong"} = err;
-    res.status(statusCode).send(message);
+    res.status(statusCode).render("./listing/Error.ejs",{err});
+    // res.status(statusCode).send(message);
 });
 
 // server listing on it 
