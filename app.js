@@ -114,6 +114,19 @@ app.post("/listings/:id/reviews", async(req,res) =>
     res.redirect(`listings/${listing._id}`);
 })
 
+// reveiw submit route
+
+app.post("/listings/:id/reviews", async(req,res) =>
+{
+    let listing = Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    console.log("new review saved");
+    res.redirect(`listings/${listing._id}`);
+})
 // for all invalid routes
 app.all(/.*/, (req,res, next) => {
     next(new ExpressError(404, "page not found"));

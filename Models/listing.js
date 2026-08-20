@@ -23,6 +23,12 @@ const listingschema = new Schema({
             return defaultImage;
         }
     },
+    reviews : [
+        {
+         type : Schema.Types.ObjectId,
+         ref : "Review",
+        },
+    ],
     price: Number,
     location: String,
     country: String
