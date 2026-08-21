@@ -129,15 +129,16 @@ app.delete("/listings/:id", wrapAsync(async (req,res) =>
 // reveiw submit route
 app.post("/listings/:id/reviews",validatereview, async(req,res) =>
 {
-    let listing = await Listing.findById(req.params.id);
+    let listings = await listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
 
-    listing.reviews.push(newReview);
+    listings.reviews.push(newReview);
     await newReview.save();
-    await listing.save();
+    await listings.save();
     console.log("new review saved");
-    res.redirect(`listings/${listing._id}`);
-})
+    res.redirect(`/listings/${listings._id}`);
+});
+
 // for all invalid routes
 app.all(/.*/, (req,res, next) => {
     next(new ExpressError(404, "page not found"));
