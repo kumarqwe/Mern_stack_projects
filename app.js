@@ -80,7 +80,7 @@ app.get("/listings", async (req,res)=> {
 // show route for a single listing
 app.get("/listings/:id", async (req,res) => {
     const {id} = req.params;
-    const listings = await listing.findById(id);
+    const listings = await listing.findById(id).populate("reviews");
     res.render("./listing/show.ejs", { listings });   
 });
 
