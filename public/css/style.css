@@ -119,3 +119,8 @@ body {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+
+.reviewcard 
+{
+    border: #222222 solid 1px !important;
+}
