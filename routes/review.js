@@ -1,0 +1,43 @@
+const express = require("express");
+const router = express.Router({ mergeParams: true });
+const wrapAsync = require("../utils/wrapAsync.js");
+const ExpressError = require("../utils/ExpressError.js");
+const listing = require("../Models/listing.js");
+const Review  = require("../Models/review.js");
+const {listingSchema,reviewSchema} = require("../schema.js");
+
+const validatereview = (req,res,next) => {
+    let {error} = reviewSchema.validate(req.body);
+    if( error) 
+    {
+        let errmsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(404, errmsg);
+    }
+    else
+    {
+        next();
+    }
+};
+
+// reveiw submit route
+router.post("/",validatereview, wrapAsync(async(req,res) =>
+{
+    let listings = await listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+
+    listings.reviews.push(newReview);
+    await newReview.save();
+    await listings.save();
+    console.log("new review saved");
+    res.redirect(`/listings/${listings._id}`);
+}));
+
+// delete review route
+router.delete("/:reviewId", async(req,res) => {
+    let {id, reviewId} = req.params;
+    await listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
+})
+
+module.exports = router;
