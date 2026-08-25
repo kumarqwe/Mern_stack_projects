@@ -139,6 +139,13 @@ app.post("/listings/:id/reviews",validatereview, async(req,res) =>
     res.redirect(`/listings/${listings._id}`);
 });
 
+// delete review route
+app.delete("/listings/:id/review/:reviewId", async(req,res) => {
+    let {id, reviewId} = req.params;
+    await listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
+})
 // for all invalid routes
 app.all(/.*/, (req,res, next) => {
     next(new ExpressError(404, "page not found"));
