@@ -10,6 +10,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const routerlisting = require("./routes/listing.js");
 const routerreview = require("./routes/review.js");
 const session = require("express-session");
+const flash = require("connect-flash");
 
 const sessionOptions = {
     secret: "secretkey",
@@ -23,7 +24,11 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session(sessionOptions));
-
+app.use(flash());
+app.use((req,res, next) => {
+    res.locals.success = req.flash("success");
+    next();
+})
 app.use("/listings/:id/reviews", routerreview);
 app.use("/listings", routerlisting);
 
