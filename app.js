@@ -6,17 +6,23 @@ const initatedata = require("./init/data.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsmate = require("ejs-mate");
-const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const {listingSchema,reviewSchema} = require("./schema.js");
-const Review  = require("./Models/review.js");
 const routerlisting = require("./routes/listing.js");
 const routerreview = require("./routes/review.js");
+const session = require("express-session");
+
+const sessionOptions = {
+    secret: "secretkey",
+    resave: false,
+    saveUninitialized: true
+}
+
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"Views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session(sessionOptions));
 
 app.use("/listings/:id/reviews", routerreview);
 app.use("/listings", routerlisting);
