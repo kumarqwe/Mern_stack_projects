@@ -2,3 +2,7 @@
     <div class="alert alert-success alert-dismissible offset-2 col-md-8" ><%= success %>
      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
 <% } %>
+<% if(error && error.length) { %>
+    <div class="alert alert-danger alert-dismissible offset-2 col-md-8" ><%= error %>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>
+<% } %>

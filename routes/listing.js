@@ -33,6 +33,11 @@ router.get("/new", (req,res) => {
 router.get("/:id", async (req,res) => {
     const {id} = req.params;
     const listings = await listing.findById(id).populate("reviews");
+    if(!listings)
+    {
+        req.flash("error","listing your requested for does not exist")
+        res.redirect("/listings");
+    }
     res.render("./listing/show.ejs", { listings });   
 });
 
@@ -50,6 +55,11 @@ router.post("/",validatelisting, wrapAsync(async (req,res, next) => {
 router.get("/:id/edit", async (req,res, next) => {
     const {id} = req.params;
     const listings = await listing.findById(id);
+    if(!listings)
+    {
+        req.flash("error","listing your requested for does not exist!");
+        res.redirect("/listings");
+    }
     res.render("./listing/edit.ejs", { listing: listings });    
 });
 
