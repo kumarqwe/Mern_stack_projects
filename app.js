@@ -9,6 +9,9 @@ const ejsmate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const routerlisting = require("./routes/listing.js");
 const routerreview = require("./routes/review.js");
+const password = require("password");
+const LocalStategy = require("password-local");
+const User = require("./Models/user.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 
@@ -20,11 +23,19 @@ const sessionOptions = {
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"Views"));
+
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session(sessionOptions));
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(new LocalStategy(User.authenticate()));
+
+passport.serializeUser(User.serlializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res, next) => {
     res.locals.success = req.flash("success");
