@@ -42,6 +42,16 @@ app.use((req,res, next) => {
     res.locals.error = req.flash("error");
     next();
 })
+
+app.get("/demouser", async (req,res) => {
+    let fakeUser = new User({
+        email: "student@gmail.com",
+        username: "delta-student"
+    });
+    let registeredUser =  await User.register(fakeUser, "helloname");
+    res.send(registeredUser);
+})
+
 app.use("/listings/:id/reviews", routerreview);
 app.use("/listings", routerlisting);
 
