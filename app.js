@@ -9,8 +9,9 @@ const ejsmate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const routerlisting = require("./routes/listing.js");
 const routerreview = require("./routes/review.js");
-const password = require("password");
-const LocalStategy = require("password-local");
+const routeruser = require("./routes/user.js");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 const User = require("./Models/user.js");
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -32,15 +33,15 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(new LocalStategy(User.authenticate()));
+passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serlializeUser());
+passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.User;
+    res.locals.currUser = req.user;
     next();
 })
 
@@ -55,7 +56,7 @@ app.get("/demouser", async (req,res) => {
 
 app.use("/listings/:id/reviews", routerreview);
 app.use("/listings", routerlisting);
-
+app.use("/", routeruser);
 app.engine("ejs",ejsmate);
 
 

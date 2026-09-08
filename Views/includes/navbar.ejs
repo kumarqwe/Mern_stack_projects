@@ -12,11 +12,11 @@
       </div>
       <div class="navbar-nav">
         <% if(!currUser) { %>
-        <a class="nav-link active " aria-current="page" href="#">Sign up</a>
-        <a class="nav-link" href="/listings">Login</a>
+        <a class="nav-link active " aria-current="page" href="/signup">Sign up</a>
+        <a class="nav-link" href="/login">Login</a>
         <% } %>
         <% if(currUser) { %>
-        <a class="nav-link " href="/listings/new">LogOut</a>
+        <a class="nav-link " href="/logout">LogOut</a>
         <% } %>
       </div>
     </div>

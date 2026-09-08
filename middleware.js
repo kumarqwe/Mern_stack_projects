@@ -3,9 +3,9 @@ module.exports.isLoggedIn = (req,res,next) => {
     {
         req.session.redirectUrl = req.originalUrl;
         req.flash("error","please login to perform this action");
-        res.redirect("/login");
+        return res.redirect("/login");
     }
-    next();
+    return next();
 }
 
 module.exports.saveRedirectUrl = (req,res, next) => {
@@ -13,5 +13,5 @@ module.exports.saveRedirectUrl = (req,res, next) => {
     {
         res.locals.redirectUrl = req.session.redirectUrl;
     }
-    next();
+    return next();
 }
