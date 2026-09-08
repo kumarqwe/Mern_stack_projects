@@ -40,4 +40,17 @@ router.post(
     }
 );
 
+//logout route
+router.get("/logout", (req,res) =>
+{
+    req.logout((err) => {
+        if(err)
+        {
+            return next(err);
+        }
+    });
+    res.flash("success","successfully logged from wanderland");
+    res.render("/listings");
+});
+
 module.exports = router;
