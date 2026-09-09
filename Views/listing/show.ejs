@@ -1,18 +1,18 @@
 <% layout("layouts/boilerplate") %>
 <div class="row mt-3">
   <div class="col-8 offset-3">
-  <h3>listing Details</h3>
+  <h3><%= listings.title %></h3>
   </div>
   <div class="card col-6 offset-3 show-card">
         <img src="<%= listings.image %>" class="card-img-top show-img" alt="listing_image">
         <div class="card-body">
         <p class="card-text">
-          <b><%= listings.title %></b></br>
-          <%= listings.description %> <br>
-           ₹ <%= listings.price.toLocaleString("en-IN") %> <br>
-           <%= listings.location %> <br>
-           <%= listings.country %>
-        </p>
+          <b>Owned by <%= listings.owner.username %></b></p></br>
+        <p class="card-text"><%= listings.description %></p><br>
+        <p class="card-text">₹ <%= listings.price.toLocaleString("en-IN") %></p><br>
+        <p class="card-text"><%= listings.location %></p><br>
+        <p class="card-text"><%= listings.country %></p>   
+        
       </div>
     </div> 
       <br/> 

@@ -23,15 +23,20 @@ const listingschema = new Schema({
             return defaultImage;
         }
     },
+    price: Number,
+    location: String,
+    country: String,
     reviews : [
         {
          type : Schema.Types.ObjectId,
          ref : "Review",
         },
     ],
-    price: Number,
-    location: String,
-    country: String
+    owner: {
+        type : Schema.Types.ObjectId,
+        ref  : "Review",
+    }
+    
 })
 
 const Listing = mongoose.model("listing",listingschema);
