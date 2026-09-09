@@ -34,7 +34,7 @@ const listingschema = new Schema({
     ],
     owner: {
         type : Schema.Types.ObjectId,
-        ref  : "Review",
+        ref  : "user",
     }
     
 })
