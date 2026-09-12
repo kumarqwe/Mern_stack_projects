@@ -1,4 +1,5 @@
 const listing = require("./Models/listing.js");
+const Review  = require("./Models/review.js");
 module.exports.isLoggedIn = (req,res,next) => {
     if(!req.isAuthenticated())
     {
@@ -23,6 +24,16 @@ module.exports.isowner = async (req,res,next) => {
         if(!listinging.owner._id.equals(res.locals.currUser._id))
         {
            req.flash("error", "you are not the owner of this listing, so you cannot update it");
+           return res.redirect(`/listings/${id}`);
+        }
+}
+
+module.exports.isreviewowner = async (req,res,next) => {
+    let {id, reviewId} = req.params;
+        const review = await Review.findById(reviewId);
+        if(!review.author.equals(res.locals.currUser._id))
+        {
+           req.flash("error", "you are not the aothor of this review");
            return res.redirect(`/listings/${id}`);
         }
 }

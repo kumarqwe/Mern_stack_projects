@@ -33,7 +33,7 @@ router.get("/new",isLoggedIn, (req,res) => {
 // show route for a single listing
 router.get("/:id", async (req,res) => {
     const {id} = req.params;
-    const listings = await listing.findById(id).populate("reviews").populate("owner");
+    const listings = await listing.findById(id).populate({path:"reviews",populate: {path:"author"}}).populate("owner");
     if(!listings)
     {
         req.flash("error","listing your requested for does not exist");
