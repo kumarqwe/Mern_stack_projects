@@ -37,3 +37,16 @@ module.exports.isreviewowner = async (req,res,next) => {
            return res.redirect(`/listings/${id}`);
         }
 }
+
+module.exports.validatelisting = async (req,res,next) => {
+    let {error} = listingSchema.validate(req.body);
+        if( error) 
+        {
+            let errmsg = error.details.map((el) => el.message).join(",");
+            throw new ExpressError(400, errmsg);
+        }
+        else
+        {
+            next();
+        }
+}
