@@ -11,17 +11,8 @@ const listingschema = new Schema({
     },
     description : String,
     image: {
-        type : Schema.Types.Mixed,
-        default : defaultImage,
-        set : (v) => {
-            if (typeof v === "string") {
-                return v.trim() === "" ? defaultImage : v;
-            }
-            if (v && typeof v === "object" && typeof v.url === "string") {
-                return v.url;
-            }
-            return defaultImage;
-        }
+        url: String,
+        filename:String
     },
     price: Number,
     location: String,
