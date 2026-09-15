@@ -11,6 +11,12 @@ module.exports.renderNewForm = (req,res) => {
     res.render("./listing/new.ejs");
 }
 
+module.exports.renderEditForm = async (req,res) => {
+    let {id} = req.params;
+    const listings = await listing.findById(id);
+    res.render("./listing/edit.ejs", {listing:listings});
+};
+
 module.exports.showListing = async (req,res) => {
     const {id} = req.params;
     const listings = await listing.findById(id).populate({path:"reviews",populate: {path:"author"}}).populate("owner");
@@ -34,21 +40,19 @@ module.exports.createListing = async (req,res, next) => {
     res.redirect("/listings",);
 }
 
-module.exports.renderEditForm = async (req,res, next) => {
-    let result = listingSchema.validate(req.body); 
-    console.log(result);
-    const newListing = new listing(req.body.listing);
-    newListing.owner = req.user._id;
-    await newListing.save();
-    req.flash("success", "Listing created successfully");
-    res.redirect("/listings",);
-}
-
 module.exports.updateListing = async (req,res, next) => {
     if ( !req.body || !req.body.listing) {
         throw new ExpressError(400, "Invalid listing data");
     }
-    await listing.findByIdAndUpdate(id, {...req.body.listing});
+    const listing =await listing.findByIdAndUpdate(id, {...req.body.listing});
+    if(req.file !== undefined)
+    {
+        let url = req.file.path;
+    let filename = req.file.filename;
+    listing.image = {url,filename};
+    await listing.save();
+    }
+    
     req.flash("success", "Listing updated successfully");
     return res.redirect(`/listings/${id}`);
 }
