@@ -24,7 +24,7 @@ module.exports.renderEditForm = async (req,res) => {
         "/upload/",
         "/upload/c_fill,h_200,w_100/"
     );
-    res.render("./listing/edit.ejs", {listing:listings, originalImageUrl: transformedImageUrl });
+    res.render("./listing/edit.ejs", {listing:listings, transformedImageUrl });
 };
 
 module.exports.showListing = async (req,res) => {
