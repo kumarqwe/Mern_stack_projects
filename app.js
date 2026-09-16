@@ -50,15 +50,6 @@ app.use((req,res, next) => {
     next();
 })
 
-app.get("/demouser", async (req,res) => {
-    let fakeUser = new User({
-        email: "student@gmail.com",
-        username: "delta-student"
-    });
-    let registeredUser =  await User.register(fakeUser, "helloname");
-    res.send(registeredUser);
-})
-
 app.use("/listings/:id/reviews", routerreview);
 app.use("/listings", routerlisting);
 app.use("/", routeruser);
@@ -101,7 +92,6 @@ app.all(/.*/, (req,res, next) => {
 app.use((err,req, res, next) => {
     let {statusCode=500,message="Something went wrong"} = err;
     res.status(statusCode).render("./listing/Error.ejs",{err});
-    // res.status(statusCode).send(message);
 });
 
 // server listing on it 
