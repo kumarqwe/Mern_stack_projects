@@ -17,13 +17,18 @@ module.exports.renderEditForm = async (req,res) => {
     if(!listings)
     {
         req.flash("error","listing your request for does not exist");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
-    let originalImageUrl = listings.image.url;
-    let transformedImageUrl = originalImageUrl.replace(
-        "/upload/",
-        "/upload/c_fill,h_200,w_100/"
-    );
+    let originalImageUrl = listings?.image?.url || "";
+    let transformedImageUrl = originalImageUrl;
+
+    if (originalImageUrl.includes("/upload/")) {
+        transformedImageUrl = originalImageUrl.replace(
+            "/upload/",
+            "/upload/c_fill,h_200,w_100/"
+        );
+    }
+
     res.render("./listing/edit.ejs", {listing:listings, transformedImageUrl });
 };
 
