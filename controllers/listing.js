@@ -22,7 +22,7 @@ module.exports.renderEditForm = async (req,res) => {
     let originalImageUrl = listings.image.url;
     originalImageUrl = originalImageUrl.replace(
         "/upload/",
-        "/upload/c_fill,h_200,w_100/"
+        "/upload/c_thumb,g_face,h_200,w_200/r_max/f_auto/"
     );
     res.render("./listing/edit.ejs", {listing:listings, originalImageUrl });
 };
