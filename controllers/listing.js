@@ -20,11 +20,11 @@ module.exports.renderEditForm = async (req,res) => {
         res.redirect("/listings");
     }
     let originalImageUrl = listings.image.url;
-    let transformedImageUrl = originalImageUrl.replace(
+    originalImageUrl = originalImageUrl.replace(
         "/upload/",
         "/upload/c_fill,h_200,w_100/"
     );
-    res.render("./listing/edit.ejs", {listing:listings, originalImageUrl: transformedImageUrl });
+    res.render("./listing/edit.ejs", {listing:listings, originalImageUrl });
 };
 
 module.exports.showListing = async (req,res) => {
