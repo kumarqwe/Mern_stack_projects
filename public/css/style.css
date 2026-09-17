@@ -106,7 +106,7 @@ body {
 
 /* show page */
 .show-img {
-    height: 30vh;
+    height: 40vh;
     object-fit: cover;
 }
 
@@ -123,4 +123,10 @@ body {
 .reviewcard 
 {
     border: #222222 solid 1px !important;
+}
+
+/* map */
+#map {
+    width: 500px;
+    height: 60vh;
 }
