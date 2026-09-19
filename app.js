@@ -59,7 +59,8 @@ app.engine("ejs",ejsmate);
 if (typeof globalThis.crypto === "undefined") {
   globalThis.crypto = require("crypto").webcrypto;
 }
-const MONGO_URL = "mongodb://127.0.0.1:27017/mernstack";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/mernstack";
+const dbUrl = process.env.ATLASDB_URL;
 
 main().then( () => {
     console.log("connection successful");
@@ -69,18 +70,18 @@ main().then( () => {
 })
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
 }
 
-const initDB = async () =>  {
-    await listing.deleteMany({});
-    initatedata.data = initatedata.data.map((obj) => ({...obj, owner: "6aa0505ea2974932219dc60d"}));
-    initatedata.data = initatedata.data.map((obj) => ({...obj, geometry: {type: "Point", coordinates: [77.2089, 28.6139]}}));
-    await listing.insertMany(initatedata.data);
-    console.log("data was added successfully");
-}
+// const initDB = async () =>  {
+//     await listing.deleteMany({});
+//     initatedata.data = initatedata.data.map((obj) => ({...obj, owner: "6aa0505ea2974932219dc60d"}));
+//     initatedata.data = initatedata.data.map((obj) => ({...obj, geometry: {type: "Point", coordinates: [77.2089, 28.6139]}}));
+//     await listing.insertMany(initatedata.data);
+//     console.log("data was added successfully");
+// }
 
-initDB().catch((err) => console.error(err));
+// initDB().catch((err) => console.error(err));
 
 
 // for all invalid routes
