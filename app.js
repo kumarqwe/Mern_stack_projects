@@ -18,13 +18,26 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./Models/user.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 
-
+const store = MongoStore.create({
+    mongoUrl: process.env.ATLASDB_URL,
+    crypto: {
+        secret: process.env.SECRET_KEY
+    },
+    touchAfter: 24 * 60 * 60
+});
 const sessionOptions = {
-    secret: "secretkey",
+    store,
+    secret: process.env.SECRET_KEY,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true
+    }
 }
 
 app.set("view engine","ejs");

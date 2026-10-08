@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "v24.21.0"
+  },
   "name": "mern_stack_projects",
   "version": "1.0.0",
   "description": "",
@@ -23,6 +26,8 @@
     "bootstrap": "^5.3.8",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.6.0",
+    "connect-mongodb": "^1.1.5",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "ejs-mate": "^4.0.0",
